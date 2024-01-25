@@ -176,4 +176,93 @@ public class LinkedList {
         }
     }
 
+    /* leet code method */
+    public Node findMiddleNode() {
+        Node slowPointer = this.head;
+        Node fasterPointer = this.head;
+        while (fasterPointer != null && fasterPointer.next != null) {
+            slowPointer = slowPointer.next;
+            fasterPointer = fasterPointer.next.next;
+        }
+        return slowPointer;
+    }   //  중간 노드 찾기
+
+    public boolean hasLoop() {
+        if (this.head == null) {
+            return false;
+        }
+        if (this.tail.next != null) {
+            return true;
+        }
+        Node slowPointer = this.head;
+        Node fastPointer = this.head;
+        while (fastPointer != null && fastPointer.next != null) {
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next.next;
+            if (slowPointer == fastPointer) {
+                return true;
+            }
+        }
+        return false;
+    }   //  루프 확인
+
+    /**
+     * If the list has fewer than k nodes, the method should return null.
+     */
+    public Node findKthFromEnd(int k) {
+        Node fastPointer = this.head;
+        Node slowPointer = this.head;
+        for (int i = 0; i < k; i++) {
+            fastPointer = fastPointer.next;
+        }
+        while (fastPointer != null) {
+            fastPointer = fastPointer.next;
+            slowPointer = slowPointer.next;
+        }
+        return slowPointer;
+    }   //  끝에서 k 번째 노드 찾기.
+
+    /**
+     * You have a singly linked list that DOES NOT HAVE A TAIL POINTER  (which will make this method simpler to implement).
+     * Given a value x you need to rearrange the linked list such that
+     * all nodes with a value less than x come before all nodes with a value greater than or equal to x.
+     * Additionally, the relative order of nodes in both partitions should remain unchanged.
+     * Constraints:
+     * The solution should traverse the linked list at most once.
+     * The solution should not create a new linked list.
+     */
+    public void partitionList(int x) {
+
+        if (head == null) return;
+
+        Node dummy1 = new Node(0);
+        Node dummy2 = new Node(0);
+
+        //  ***
+        Node prev1 = dummy1;
+        Node prev2 = dummy2;
+        Node current = head;
+
+        while (current != null) {
+            if (current.value < x) {
+                prev1.next = current;
+                prev1 = current;
+            } else {
+                prev2.next = current;
+                prev2 = current;
+            }
+            current = current.next;
+        }
+        prev2.next = null;
+        prev1.next = dummy2.next;
+        head = dummy1.next;
+    }
+    // x를 기준으로 파티션을 나누고 순서대로 정렬하기,
+    // argument ) 3 -> 8 -> 5 -> 10 -> 2 -> 1, x: 5
+    // return ) 3 -> 2 -> 1 -> 8 -> 5 -> 10
+
+    public void removeDuplicates() {
+        // Your implementation goes here
+    }
+
 }
