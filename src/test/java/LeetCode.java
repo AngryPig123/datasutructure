@@ -310,4 +310,213 @@ public class LeetCode {
         }
     }
 
+
+    /**
+     * 1 <= nums.length <= 104
+     * -104 <= nums[i] <= 104
+     * nums contains distinct values sorted in ascending order.
+     * -104 <= target <= 104
+     */
+    @Test
+    public void searchInsert() {    //  https://leetcode.com/problems/search-insert-position/
+        Assert.assertEquals(2, searchInsert(new int[]{1, 3, 5, 6}, 5));
+        Assert.assertEquals(1, searchInsert(new int[]{1, 3, 5, 6}, 2));
+        Assert.assertEquals(4, searchInsert(new int[]{1, 3, 5, 6}, 7));
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >= target) {
+                return i;
+            }
+        }
+        return nums.length;
+    }
+
+
+    /**
+     *
+     */
+    @Test
+    public void lengthOfLastWord() {    //  https://leetcode.com/problems/length-of-last-word/
+        Assert.assertEquals(5, lengthOfLastWord("Hello World"));
+        Assert.assertEquals(4, lengthOfLastWord("   fly me   to   the moon  "));
+        Assert.assertEquals(6, lengthOfLastWord("luffy is still joyboy"));
+    }
+
+    public int lengthOfLastWord(String s) {
+        int temp = 0;
+        int answer = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                temp = 0;
+            } else {
+                temp = temp + 1;
+                answer = temp;
+            }
+        }
+        return answer;
+    }
+
+    /**
+     * 1 <= digits.length <= 100
+     * 0 <= digits[i] <= 9
+     * digits does not contain any leading 0's.
+     */
+    @Test
+    public void plusOne() { //  https://leetcode.com/problems/plus-one/description/
+        Assert.assertArrayEquals(new int[]{1, 2, 4}, plusOne(new int[]{1, 2, 3}));
+        Assert.assertArrayEquals(new int[]{4, 3, 2, 2}, plusOne(new int[]{4, 3, 2, 1}));
+        Assert.assertArrayEquals(new int[]{1, 0}, plusOne(new int[]{9}));
+        Assert.assertArrayEquals(new int[]{1, 0, 0, 0}, plusOne(new int[]{9, 9, 9}));
+        Assert.assertArrayEquals(new int[]{9, 8, 9}, plusOne(new int[]{9, 8, 8}));
+    }
+
+    public int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1; i >= 0; i--) {
+            if (digits[i] + 1 == 10) {
+                digits[i] = 0;
+            } else {
+                digits[i] += 1;
+                return digits;
+            }
+        }
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
+    }
+
+    /**
+     * 1 <= a.length, b.length <= 104
+     * a and b consist only of '0' or '1' characters.
+     * Each string does not contain leading zeros except for the zero itself.
+     * <p>
+     * & : AND 연산 (논리곱)
+     * 두 비트가 모두 1일 때만 결과가 1이 됩니다.
+     * <p>
+     * | : OR 연산 (논리합)
+     * 두 비트 중 하나 이상이 1이면 결과가 1이 됩니다.
+     * <p>
+     * ^ : XOR 연산 (배타적 논리합)
+     * 두 비트가 서로 다르면 결과가 1이 됩니다.
+     * <p>
+     * ~ : NOT 연산 (논리 부정)
+     * 비트를 반전시킵니다. 1은 0으로, 0은 1로 변합니다.
+     * <p>
+     * << : 왼쪽 시프트 연산
+     * 비트를 왼쪽으로 이동시킵니다.
+     * <p>
+     * >> : 오른쪽 시프트 연산 (부호 있는 오른쪽 시프트)
+     * 비트를 오른쪽으로 이동시키고 부호 비트를 유지합니다.
+     * <p>
+     * >>> : 오른쪽 시프트 연산 (부호 없는 오른쪽 시프트)
+     * 비트를 오른쪽으로 이동시키고 부호 비트를 0으로 채웁니다.
+     */
+    @Test
+    public void addBinary() {   //  https://leetcode.com/problems/add-binary/,  비트연산.
+        Assert.assertEquals("100", addBinary("11", "1"));
+        Assert.assertEquals("10101", addBinary("1010", "1011"));
+    }
+
+    public String addBinary(String a, String b) {
+        char temp = '0';
+        StringBuilder answer = new StringBuilder();
+
+        int maxLength = Math.max(a.length(), b.length());
+        for (int i = 0; i < maxLength; i++) {
+            char aChar = (i < a.length()) ? a.charAt(a.length() - 1 - i) : '0';
+            char bChar = (i < b.length()) ? b.charAt(b.length() - 1 - i) : '0';
+            char sum = (char) (aChar ^ bChar ^ temp);
+            temp = (char) ((aChar & bChar) | (temp & (aChar ^ bChar)));
+            answer.insert(0, sum);
+        }
+        if (temp == '1') answer.insert(0, '1');
+
+        return answer.toString();
+    }
+
+
+    /**
+     * 0 <= x <= 231 - 1
+     */
+    @Test
+    public void mySqrt() {  //  https://leetcode.com/problems/sqrtx/description/
+        Assert.assertEquals(10, mySqrt(101));
+    }
+
+    public int mySqrt(int x) {
+        if (x == 1) return 1;
+        int left = 1, right = x / 2, result = 0;
+        while (left <= right) {
+            int value = left + (right - left) / 2;
+            if (value == x / value) {
+                return value;
+            } else if (value < x / value) {
+                left = value + 1;
+                result = value;
+            } else {
+                right = value - 1;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 1 <= n <= 45
+     */
+    @Test
+    public void climbStairs() { //  https://leetcode.com/problems/climbing-stairs/
+        Assert.assertEquals(2, climbStairs(2));
+        Assert.assertEquals(3, climbStairs(3));
+        Assert.assertEquals(5, climbStairs(4));
+        Assert.assertEquals(8, climbStairs(5));
+        Assert.assertEquals(13, climbStairs(6));
+    }
+
+    public int climbStairs(int n) {
+        int[] answer = new int[n + 1];
+        answer[0] = 1;
+        answer[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            answer[i] = answer[i - 1] + answer[i - 2];
+        }
+        return answer[n];
+    }
+
+    /**
+     * The number of nodes in the list is in the range [0, 300].
+     * -100 <= Node.val <= 100
+     * The list is guaranteed to be sorted in ascending order.
+     */
+    @Test
+    public void deleteDuplicates() {    //  https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+
+        ListNode confirmNode = new ListNode(1);
+        confirmNode.next = new ListNode(1);
+        confirmNode.next.next = new ListNode(2);
+        confirmNode.next.next.next = new ListNode(3);
+        confirmNode.next.next.next.next = new ListNode(3);
+
+        deleteDuplicates(confirmNode);
+
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {   //  1,1,2,3,3
+
+        return null;
+    }
+
+    @Test
+    public void testtt() {
+        int[] sort = new int[]{7, 1, 3, 2};
+        Assert.assertArrayEquals(new int[]{1, 2, 3, 7}, sorting(sort));
+    }
+
+    public int[] sorting(int[] target) {
+
+
+
+        return target;
+    }
+
 }
