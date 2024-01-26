@@ -131,7 +131,7 @@ public class DoublyLinkedList {
             removeLast();
         } else if (index == 0) {
             removeFirst();
-        }else{
+        } else {
             Node before = temp.prev;
             Node after = temp.next;
             before.next = after;
@@ -141,6 +141,33 @@ public class DoublyLinkedList {
             this.size--;
         }
         return temp;
+    }
+
+    /* leet code */
+
+    public void swapFirstLast() {
+        if (this.head != null && this.head.next != null) {
+            Node firstNode = this.head;
+            Node lastNode = this.tail;
+            int firstNodeValue = this.head.value;
+            firstNode.value = this.tail.value;
+            lastNode.value = firstNodeValue;
+        }
+    }
+
+    public void reverse() {
+
+        Node current = this.head;
+        Node temp = null;
+        while (current != null) {
+            temp = current.prev;
+            current.prev = current.next;
+            current.next = temp;
+            current = current.prev;
+        }
+        temp = this.head;
+        this.head = this.tail;
+        this.tail = temp;
     }
 
 }
