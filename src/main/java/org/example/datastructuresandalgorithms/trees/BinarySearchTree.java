@@ -9,7 +9,7 @@ public class BinarySearchTree {
     }
 
     public BinarySearchTree() {
-    }
+    }   //  left, right 작은값, 큰값
 
     public boolean insert(int value) {
         Node newNode = new Node(value);
@@ -55,6 +55,36 @@ public class BinarySearchTree {
             }
         }
         return false;
+    }
+
+    private boolean rContains(Node currentNode, int value) {
+        if (currentNode == null) return false;
+        if (currentNode.value == value) return true;
+        if (value < currentNode.value) {
+            return rContains(currentNode.left, value);
+        } else {
+            return rContains(currentNode.right, value);
+        }
+    }
+
+    private Node rInsert(Node currentNode, int value) {
+        if (currentNode == null) {
+            Node newNode = new Node(value);
+            this.root = newNode;
+            return newNode;
+        }
+
+        if (value < currentNode.left.value) {
+            currentNode.left = rInsert(currentNode.left, value);
+        } else if (value > currentNode.right.value) {
+            currentNode.right = rInsert(currentNode.right, value);
+        }
+        return currentNode;
+    }
+
+    private Node deleteNode(Node currentNode, int value) {
+
+        return null;
     }
 
 }
