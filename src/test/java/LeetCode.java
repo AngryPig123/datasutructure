@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCode {
 
@@ -651,6 +652,86 @@ public class LeetCode {
             columnNumber = (columnNumber - 1) / 26;
         }
         return sb.toString();
+    }
+
+
+    /**
+     * Reverse String
+     * 공간 복잡도 : O(1)
+     */
+    public void reverseString(char[] s) {
+        int right = s.length - 1;
+        int left = 0;
+        while (left < right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    /**
+     * Longest Common Prefix
+     */
+    public String longestCommonPrefix2(String[] strs) {
+        if (strs.length == 0) return "";
+        String prefix = strs[0];
+        for (String str : strs) {
+            while (str.indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) return "";
+            }
+        }
+        return prefix;
+    }
+
+    /**
+     * Repeated DNS Sequences
+     * https://leetcode.com/problems/repeated-dna-sequences/
+     */
+    @Test
+    public void findRepeatedDnaSequences() {
+        Assertions.assertEquals(List.of("AAAAACCCCC", "CCCCCAAAAA"), findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"));
+        Assertions.assertEquals(List.of("AAAAAAAAAA"), findRepeatedDnaSequences("AAAAAAAAAAA"));
+    }
+
+    public List<String> findRepeatedDnaSequences(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i <= s.length() - 10; i++) {
+            String substring = s.substring(i, i + 10);
+            if (map.containsKey(substring)) {
+                map.put(substring, map.get(substring) + 1);
+            } else {
+                map.put(substring, 1);
+            }
+        }
+        List<String> answer = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > 1) {
+                answer.add(entry.getKey());
+            }
+        }
+        return answer;
+    }
+
+
+    /**
+     * Valid Anagram
+     * https://leetcode.com/problems/valid-anagram/
+     */
+    @Test
+    public void validAnagram() {
+        Assertions.assertTrue(isAnagram("anagram", "naagram"));
+        Assertions.assertFalse(isAnagram("rat", "car"));
+    }
+
+    public boolean isAnagram(String s, String t) {
+        char[] str1 = s.toCharArray();
+        Arrays.sort(str1);
+        char[] str2 = t.toCharArray();
+        Arrays.sort(str2);
+        return new String(str1).equals(new String(str2));
     }
 
 }
