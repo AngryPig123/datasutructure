@@ -5,82 +5,104 @@ import java.util.List;
 
 public class Heap {
 
-    private List<Integer> heap;
+    public List<Integer> heaps;
 
     public Heap() {
-        heap = new ArrayList<>();
+        this.heaps = new ArrayList<>();
     }
 
-    public List<Integer> getHelp() {
-        return new ArrayList<>(heap);
+    public void add(int value) {
+        this.heaps.add(value);
+    }   //  임시 메소드
+
+    public void swap(int index1, int index2) {
+        int temp = heaps.get(index1);
+        heaps.set(index1, heaps.get(index2));
+        heaps.set(index2, temp);
     }
 
-    private int leftChild(int index) {
-        return 2 * index + 1;
+    public int leftIndex(int index) {
+        return (2 * index) + 1;
     }
 
-    private int rightChild(int index) {
-        return 2 * index + 2;
+    public int rightIndex(int index) {
+        return (2 * index) + 2;
     }
 
-    private int parent(int index) {
+    public int parentIndex(int index) {
         return (index - 1) / 2;
     }
 
-    private void swap(int index1, int index2) {
-        int temp = heap.get(index1);
-        heap.set(index1, heap.get(index2));
-        heap.set(index2, heap.get(temp));
-    }
-
     public void insert(int value) {
-        heap.add(value);
-        int current = heap.size() - 1;
-        while (current > 0 && heap.get(current) > heap.get(parent(current))) {
-            swap(current, parent(current));
-            current = parent(current);
+        heaps.add(value);
+        int current = heaps.size() - 1;
+        while (current > 0 && heaps.get(current) > heaps.get(parentIndex(current))) {
+            int temp = parentIndex(current);
+            if (heaps.get(temp) < heaps.get(current)) {
+                swap(current, parentIndex(current));
+                current = parentIndex(current);
+            }
         }
     }
 
     public Integer remove() {
-
-        if (heap.isEmpty()) {
-            return null;
-        }
-
-        if (heap.size() == 1) {
-            return heap.remove(0);
-        }
-
-        int maxValue = heap.get(0);
-        heap.set(0, heap.remove(heap.size() - 1));  //
+        if (heaps.isEmpty()) return null;
+        if (heaps.size() == 1) return heaps.get(0);
+        int answer = heaps.get(0);
+        int current = heaps.size() - 1;
+        heaps.set(0, heaps.get(current));   //  마지막 노드와 바꾼다.
+        heaps.remove(current);
         sinkDown(0);
-        return maxValue;
+        return answer;
     }
 
     public void sinkDown(int index) {
-
         int maxIndex = index;
         while (true) {
-
-            int leftIndex = leftChild(index);
-            int rightIndex = rightChild(index);
-
-            if (heap.get(leftIndex) > heap.get(maxIndex)) {
+            int leftIndex = leftIndex(index);
+            int rightIndex = rightIndex(index);
+            if (leftIndex < heaps.size() && heaps.get(maxIndex) < heaps.get(leftIndex)) {
                 maxIndex = leftIndex;
             }
-
-            if (heap.get(rightIndex) > heap.get(maxIndex)) {
+            if (leftIndex < heaps.size() && heaps.get(maxIndex) < heaps.get(rightIndex)) {
                 maxIndex = rightIndex;
             }
-
             if (maxIndex != index) {
-                swap(index, maxIndex);
+                swap(maxIndex, index);
                 index = maxIndex;
-            }
-
+            } else {
+                return;
+            }   //  ToDO
         }
+    }
 
+    @Override
+    public String toString() {
+        return heaps.toString();
+    }
+
+    public void printHeapTree() {
+        int n = heaps.size();
+        int height = (int) Math.ceil(Math.log(n + 1) / Math.log(2));
+        int currentIndex = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < Math.pow(2, i) && currentIndex < n; j++) {
+                printSpaces((int) Math.pow(2, height - i - 1) - 1);
+                System.out.print(heaps.get(currentIndex));
+                printSpaces((int) Math.pow(2, height - i) - 1);
+                currentIndex++;
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+    }
+
+    // 공백 출력을 위한 도우미 함수
+    private static void printSpaces(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.print(" ");
+        }
     }
 
 
