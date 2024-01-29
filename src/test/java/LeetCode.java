@@ -484,5 +484,177 @@ public class LeetCode {
     }
 
 
+    /**
+     * Binary Tree Inorder Traversal
+     * The number of nodes in the tree is in the range [0, 100].
+     * -100 <= Node.val <= 100
+     */
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) {  //  https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+        List<Integer> returnList = new ArrayList<>();
+        helper(root, returnList);
+        return returnList;
+    }
+
+    public void helper(TreeNode root, List<Integer> answer) {
+        if (root != null) {
+            inorderTraversal(root.left);
+            answer.add(root.val);
+            inorderTraversal(root.right);
+        }
+    }
+
+
+    /**
+     * Same Tree
+     * <p>
+     * The number of nodes in both trees is in the range [0, 100].
+     * -104 <= Node.val <= 104
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) { //  https://leetcode.com/problems/same-tree/
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+
+    /**
+     * Symmetric Tree
+     * <p>
+     * The number of nodes in the tree is in the range [1, 1000].
+     * -100 <= Node.val <= 100
+     */
+    public boolean isSymmetric(TreeNode root) { //  https://leetcode.com/problems/symmetric-tree/
+        return isSymmetricHelper(root, root);
+    }
+
+    public boolean isSymmetricHelper(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        return (left.val == right.val) && isSymmetricHelper(left.left, right.right) && isSymmetricHelper(left.right, right.left);
+    }
+
+    /**
+     * Maximum Depth of Binary Tree
+     * <p>
+     * The number of nodes in the tree is in the range [0, 104].
+     * -100 <= Node.val <= 100
+     */
+    public int maxDepth(TreeNode root) {    //  https://leetcode.com/problems/maximum-depth-of-binary-tree/
+        if (root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+
+    /**
+     * Convert Sorted Array to Binary Search Tree
+     * <p>
+     * 1 <= nums.length <= 104
+     * -104 <= nums[i] <= 104
+     * nums is sorted in a strictly increasing order.
+     */
+
+    public TreeNode sortedArrayToBST(int[] nums) {  //  ToDO, https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/solutions/4027619/easy-solution/
+        return null;
+    }
+
+    /**
+     * Merge Sorted Array
+     * <p>
+     * nums1.length == m + n
+     * nums2.length == n
+     * 0 <= m, n <= 200
+     * 1 <= m + n <= 200
+     * -109 <= nums1[i], nums2[j] <= 109
+     */
+
+    public void merge(int[] nums1, int m, int[] nums2, int n) { //  https://leetcode.com/problems/merge-sorted-array/
+        for (int j = 0, i = m; j < n; j++, i++) {
+            nums1[i] = nums2[j];
+        }
+        Arrays.sort(nums1);
+    }
+
+    /**
+     * Pascal's Triangle
+     * <p>
+     * 1 <= numRows <= 30
+     */
+    public List<List<Integer>> generate(int numRows) {
+        return null;
+    }   //  ToDO
+
+
+    /**
+     * Valid Palindrome
+     * <p>
+     * 1 <= s.length <= 2 * 105
+     * s consists only of printable ASCII characters.
+     */
+    @Test
+    public void validPalindrome() { //  https://leetcode.com/problems/valid-palindrome/
+        System.out.println("123노형욱21".toUpperCase());
+
+        System.out.println((int) 'A');
+
+        Assertions.assertTrue(validPalindrome("0P"));
+    }
+
+    public boolean validPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char charAt = s.charAt(i);
+            add(charAt, sb);
+        }
+        return sb.toString().contentEquals(new StringBuilder(sb).reverse());
+    }
+
+    private void add(char charAt, StringBuilder sb) {
+        if (65 <= charAt && charAt <= 90) {
+            charAt = (char) (charAt + 32);
+            sb.append(charAt);
+        } else if (97 <= charAt && charAt <= 122) {
+            sb.append(charAt);
+        } else if (48 <= charAt && charAt <= 57) {
+            sb.append(charAt);
+        }
+    }
+
+
+    /**
+     * Excel Sheet Column Title
+     * <p>
+     * 1 <= columnNumber <= 231 - 1
+     */
+    public String convertToTitle(int columnNumber) {    //  https://leetcode.com/problems/excel-sheet-column-title/
+        StringBuilder sb = new StringBuilder();
+        while (columnNumber > 0) {
+            char charAt = (char) ((columnNumber - 1) % 26 + 'A');
+            sb.insert(0, charAt);
+            columnNumber = (columnNumber - 1) / 26;
+        }
+        return sb.toString();
+    }
 
 }
+
+
+
+
