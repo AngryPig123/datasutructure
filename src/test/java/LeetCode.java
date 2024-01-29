@@ -483,40 +483,6 @@ public class LeetCode {
         return answer[n];
     }
 
-    /**
-     * The number of nodes in the list is in the range [0, 300].
-     * -100 <= Node.val <= 100
-     * The list is guaranteed to be sorted in ascending order.
-     */
-    @Test
-    public void deleteDuplicates() {    //  https://leetcode.com/problems/remove-duplicates-from-sorted-list/
 
-        ListNode confirmNode = new ListNode(1);
-        confirmNode.next = new ListNode(1);
-        confirmNode.next.next = new ListNode(2);
-        confirmNode.next.next.next = new ListNode(3);
-        confirmNode.next.next.next.next = new ListNode(3);
-
-        deleteDuplicates(confirmNode);
-
-    }
-
-    public ListNode deleteDuplicates(ListNode head) {   //  1,1,2,3,3
-
-        return null;
-    }
-
-    @Test
-    public void testtt() {
-        int[] sort = new int[]{7, 1, 3, 2};
-        Assert.assertArrayEquals(new int[]{1, 2, 3, 7}, sorting(sort));
-    }
-
-    public int[] sorting(int[] target) {
-
-
-
-        return target;
-    }
 
 }
