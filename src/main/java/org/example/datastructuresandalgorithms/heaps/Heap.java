@@ -56,7 +56,7 @@ public class Heap {
         return answer;
     }
 
-    public void sinkDown(int index) {
+    private void sinkDown(int index) {
         int maxIndex = index;
         while (true) {
             int leftIndex = leftIndex(index);
