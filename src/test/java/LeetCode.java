@@ -3,7 +3,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LeetCode {
 
@@ -434,7 +433,7 @@ public class LeetCode {
         if (temp == '1') answer.insert(0, '1');
 
         return answer.toString();
-    }
+    }   //  ToDO
 
 
     /**
@@ -722,8 +721,10 @@ public class LeetCode {
      */
     @Test
     public void validAnagram() {
+
         Assertions.assertTrue(isAnagram("anagram", "naagram"));
         Assertions.assertFalse(isAnagram("rat", "car"));
+
     }
 
     public boolean isAnagram(String s, String t) {
@@ -732,6 +733,214 @@ public class LeetCode {
         char[] str2 = t.toCharArray();
         Arrays.sort(str2);
         return new String(str1).equals(new String(str2));
+    }
+
+    /**
+     * Logest Palindromic Substring
+     * https://www.udemy.com/course/leetcode-coding-interview-question-solution-explanation/learn/lecture/21250474?start=45#overview
+     */
+    public String logestPalindromicSubstring(String str) {
+        String answer = "";
+        Map<String, Integer> maps = new HashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+
+        }
+        return answer;
+    }   //  ToDO
+
+    /**
+     * Excel Sheet Column Number
+     * https://leetcode.com/problems/excel-sheet-column-number/description/
+     */
+    @Test
+    public void titleToNumber() {
+        Assertions.assertEquals(1, titleToNumber("A"));
+        Assertions.assertEquals(28, titleToNumber("AB"));
+        Assertions.assertEquals(701, titleToNumber("ZY"));
+    }
+
+    public int titleToNumber(String columnTitle) {
+        int answer = 0;
+        int temp = 0;
+        while (temp < columnTitle.length()) {
+            int value = columnTitle.charAt(temp) - 64;
+            answer = (answer * 26) + (value);
+            temp = temp + 1;
+        }
+        return answer;
+    }
+
+    /**
+     * Isomorphic Strings
+     * https://leetcode.com/problems/isomorphic-strings/description/
+     */
+    @Test
+    public void isIsomorphic() {
+        Assertions.assertTrue(isIsomorphic("egg", "add"));
+        Assertions.assertFalse(isIsomorphic("foo", "bar"));
+        Assertions.assertTrue(isIsomorphic("paper", "title"));
+    }
+
+    public boolean isIsomorphic(String s, String t) {
+        for (int i = 0; i < s.length(); i++) {
+            s = s.replace(s.charAt(i), (char) ((char) 44032 + i));
+            t = t.replace(t.charAt(i), (char) ((char) 44032 + i));
+        }
+        return s.equals(t);
+    }
+
+    /**
+     * Word Pattern
+     * https://leetcode.com/problems/word-pattern/description/
+     */
+    @Test
+    public void wordPattern() {
+        Assertions.assertTrue(wordPattern("abba", "dog cat cat dog"));
+        Assertions.assertFalse(wordPattern("abba", "dog cat cat fish"));
+        Assertions.assertFalse(wordPattern("aaaa", "dog cat cat dog"));
+        Assertions.assertFalse(wordPattern("abba", "dog dog dog dog"));
+    }
+
+    public boolean wordPattern(String pattern, String s) {
+        String[] split = s.split(" ");
+        Map<Character, String> maps = new HashMap<>();
+        if (pattern.length() != split.length) return false;
+        for (int i = 0; i < pattern.length(); i++) {
+            char charAt = pattern.charAt(i);
+            if (!maps.containsKey(charAt)) {
+                if (maps.containsValue(split[i])) {
+                    return false;
+                }
+                maps.put(pattern.charAt(i), split[i]);
+            } else {
+
+                if (!maps.get(charAt).equals(split[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Reverse Vowels of a String
+     * https://leetcode.com/problems/reverse-vowels-of-a-string/description/
+     */
+    @Test
+    public void reverseVowels() {
+        Assertions.assertEquals("holle", reverseVowels("hello"));
+    }
+
+    public String reverseVowels(String s) {
+        String vowels = "aeiouAEIOU";
+        List<Character> vowelsList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char charAt = s.charAt(i);
+            if (vowels.contains(String.valueOf(charAt))) {
+                vowelsList.add(charAt);
+            }
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char charAt = s.charAt(i);
+            if (vowels.contains(String.valueOf(charAt))) {
+                int last = vowelsList.size() - 1;
+                sb.append(vowelsList.get(last));
+                vowelsList.remove(last);
+            } else {
+                sb.append(charAt);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Ransom Note
+     * https://leetcode.com/problems/ransom-note/description/
+     */
+    @Test
+    public void canConstruct() {
+        Assertions.assertFalse(canConstruct("a", "b"));
+        Assertions.assertFalse(canConstruct("aa", "bb"));
+        Assertions.assertTrue(canConstruct("aa", "aab"));
+    }
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        Map<Character, Integer> maps = new HashMap<>();
+        for (int i = 0; i < magazine.length(); i++) {
+            char charAt = magazine.charAt(i);
+            if (!maps.containsKey(charAt)) {
+                maps.put(charAt, 1);
+            } else {
+                maps.put(charAt, maps.get(charAt) + 1);
+            }
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            char charAt = ransomNote.charAt(i);
+            if (!maps.containsKey(charAt)) {
+                return false;
+            } else {
+                int value = maps.get(charAt);
+                if (value > 0) {
+                    maps.put(charAt, value - 1);
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * First Unique Character in a String
+     * https://leetcode.com/problems/first-unique-character-in-a-string/description/
+     */
+    @Test
+    public void firstUniqChar() {
+        Assertions.assertEquals(0, firstUniqChar("leetcode"));
+        Assertions.assertEquals(2, firstUniqChar("loveleetcode"));
+        Assertions.assertEquals(-1, firstUniqChar("aabb"));
+    }
+
+    public int firstUniqChar(String s) {
+        int[] array = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            int charAt = s.charAt(i) - 'a';
+            array[charAt]++;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            int charAt = s.charAt(i) - 'a';
+            if (array[charAt] == 1) return i;
+        }
+        return -1;
+    }
+
+    /**
+     * Find the Difference
+     * https://leetcode.com/problems/find-the-difference/description/
+     */
+    @Test
+    public void findTheDifference() {
+        Assertions.assertEquals('e', findTheDifference("abcd", "abcde"));
+        Assertions.assertEquals('y', findTheDifference("", "y"));
+    }
+    public char findTheDifference(String s, String t) {
+        int[] array1 = new int[26];
+        int[] array2 = new int[26];
+        if (s.isEmpty()) return t.charAt(0);
+        for (int i = 0; i < s.length(); i++) {
+            array1[t.charAt(i) - 'a']++;
+            array2[s.charAt(i) - 'a']++;
+            if (i == s.length() - 1) {
+                array1[t.charAt(i + 1) - 'a']++;
+            }
+        }
+        for (int i = 0; i < 26; i++) {
+            if (array2[i] - array1[i] < 0) {
+                return (char) (i + 'a');
+            }
+        }
+        return ' ';
     }
 
 }
