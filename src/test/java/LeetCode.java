@@ -924,6 +924,7 @@ public class LeetCode {
         Assertions.assertEquals('e', findTheDifference("abcd", "abcde"));
         Assertions.assertEquals('y', findTheDifference("", "y"));
     }
+
     public char findTheDifference(String s, String t) {
         int[] array1 = new int[26];
         int[] array2 = new int[26];
@@ -942,6 +943,52 @@ public class LeetCode {
         }
         return ' ';
     }
+
+    /**
+     * Binary Search
+     * https://leetcode.com/problems/binary-search/description/
+     * 시간 복잡도  O(log n)
+     */
+    @Test
+    public void binarySearch() {
+        Assertions.assertEquals(4, binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 9));
+        Assertions.assertEquals(-1, binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 2));
+        Assertions.assertEquals(1, binarySearch(new int[]{2, 5}, 5));
+    }
+
+    public int binarySearch(int[] nums, int target) {
+        int length = nums.length;
+        if (length == 1 && nums[0] == target) {
+            return 0;
+        }
+        int l = 0;
+        int r = length - 1;
+        while (r >= l) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] < target) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Unique Binary Search Trees
+     * https://leetcode.com/problems/unique-binary-search-trees/description/
+     */
+    @Test
+    public void numTrees() {
+
+    }
+
+    public int numTrees(int n) {
+        return (int) Math.pow(2d, n) - n;
+    }   //  ToDO
 
 }
 
