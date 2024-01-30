@@ -73,7 +73,6 @@ public class BinarySearchTree {
             this.root = newNode;
             return newNode;
         }
-
         if (value < currentNode.left.value) {
             currentNode.left = rInsert(currentNode.left, value);
         } else if (value > currentNode.right.value) {
@@ -84,7 +83,16 @@ public class BinarySearchTree {
 
     private Node deleteNode(Node currentNode, int value) {
 
+        //  1. 노드에 해당 value 가 없을 경우
+        
+        //  2. 현재 노드를 기준으로 왼쪽, 오른쪽 노드를 순환하는 코드 
+        
+        //  3.  value에 해당하는 노드를 찾았을때 노드 모양에 따라 분기를 하는 코드ㄹ
+        
+        
         return null;
-    }
+    }   //  ToDO
+
+
 
 }
