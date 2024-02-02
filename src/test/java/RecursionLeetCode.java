@@ -19,7 +19,7 @@ public class RecursionLeetCode {
             this.next = next;
         }
 
-        void add(int val){
+        void add(int val) {
             ListNode newNode = new ListNode(val);
             ListNode current = this;
 
@@ -41,7 +41,7 @@ public class RecursionLeetCode {
      */
 
     @Test
-    public void mergeTwoLists(){
+    public void mergeTwoLists() {
         ListNode node1 = new ListNode();
         node1.add(1);
         node1.add(2);
@@ -51,7 +51,7 @@ public class RecursionLeetCode {
         node2.add(3);
         node2.add(4);
         ListNode listNode = mergeTwoLists(node1, node2);
-        while (listNode != null){
+        while (listNode != null) {
             System.out.print(listNode.val + " ");
             listNode = listNode.next;
         }
@@ -81,6 +81,42 @@ public class RecursionLeetCode {
         } else {
             current.next = list2;
         }
+    }
+
+    /**
+     * 203. Remove Linked List Elements
+     * <p>
+     * Input: head = [1,2,6,3,4,5,6], val = 6
+     * Output: [1,2,3,4,5]
+     * <p>
+     * https://leetcode.com/problems/remove-linked-list-elements/description/
+     */
+    @Test
+    public void removeElements() {
+        ListNode node = new ListNode();
+        node.add(1);
+        node.add(2);
+        node.add(6);
+        node.add(3);
+        node.add(4);
+        node.add(5);
+        node.add(6);
+        ListNode listNode = removeElements(node, 6);
+        while (listNode != null) {
+            System.out.print(listNode.val + " ");
+            listNode = listNode.next;
+        }
+    }
+
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {
+            return null;
+        }
+        if (head.val == val) {
+            return removeElements(head.next, val);
+        }
+        head.next = removeElements(head.next, val);
+        return head;
     }
 
 }
