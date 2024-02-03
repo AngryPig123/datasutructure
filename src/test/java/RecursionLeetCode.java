@@ -119,4 +119,24 @@ public class RecursionLeetCode {
         return head;
     }
 
+
+    /**
+     * 206. Reverse Linked List
+     * <p>
+     * https://leetcode.com/problems/reverse-linked-list/description/
+     * <p>
+     * The number of nodes in the list is the range [0, 5000].
+     * -5000 <= Node.val <= 5000
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode nextNode = head.next;
+        head.next = null;
+        ListNode current = reverseList(nextNode);
+        nextNode.next = head;
+        return current;
+    }
+
 }
