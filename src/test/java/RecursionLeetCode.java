@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RecursionLeetCode {
@@ -137,6 +138,28 @@ public class RecursionLeetCode {
         ListNode current = reverseList(nextNode);
         nextNode.next = head;
         return current;
+    }
+
+
+    /**
+     * 231. Power of Two
+     * <p>
+     * https://leetcode.com/problems/power-of-two/
+     */
+    @Test
+    public void isPowerOfTwo() {
+        Assertions.assertTrue(isPowerOfTwo(1));
+        Assertions.assertTrue(isPowerOfTwo(16));
+        Assertions.assertFalse(isPowerOfTwo(3));
+    }
+
+    public boolean isPowerOfTwo(int n) {
+        if (n <= 0) return false;
+        if (n == 1) return true;
+        if (n % 2 != 0) {
+            return false;
+        }
+        return isPowerOfTwo(n / 2);
     }
 
 }
