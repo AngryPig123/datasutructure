@@ -162,4 +162,27 @@ public class RecursionLeetCode {
         return isPowerOfTwo(n / 2);
     }
 
+    /**
+     * 326. Power of Three
+     * <p>
+     * https://leetcode.com/problems/power-of-three/description/
+     */
+    @Test
+    public void isPowerOfThree() {
+        Assertions.assertTrue(isPowerOfThree(3));
+        Assertions.assertTrue(isPowerOfThree(27));
+        Assertions.assertFalse(isPowerOfThree(4));
+    }
+
+    public boolean isPowerOfThree(int n) {
+        if (n <= 0) return false;
+        if (n == 1) return true;
+        if (n % 3 != 0) {
+            return false;
+        }
+        return isPowerOfThree(n / 3);
+    }
+
+
+
 }
